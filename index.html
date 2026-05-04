@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -20,38 +20,41 @@
         .app-container {
             width: 100%;
             max-width: 480px;
-            background: rgba(255, 255, 255, 0.98);
+            background: #ffffff;
             border-radius: 2rem;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             min-height: 600px;
             display: flex;
             flex-direction: column;
+            position: relative;
+            z-index: 1;
             overflow: hidden;
-            animation: slideUp 0.6s ease-out;
         }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        /* تعديل هنا: جعل الحدود رمادية فاتحة جداً في البداية */
         .option-btn {
-            transition: all 0.2s ease-in-out;
-            border: 2px solid #f1f5f9; 
+            position: relative;
+            z-index: 50 !important; /* نضمن أن الزر فوق كل شيء */
+            transition: all 0.2s ease;
+            border: 2px solid #e2e8f0; 
             background-color: #ffffff;
             cursor: pointer;
-            outline: none;
+            display: block;
+            width: 100%;
+            pointer-events: auto !important; /* نضمن أن الزر يستقبل النقر */
         }
-        /* تظهر الألوان فقط عند تمرير الفأرة أو الضغط */
         .option-btn:hover {
             border-color: #3b82f6;
-            background-color: #eff6ff;
-            transform: translateY(-2px);
+            background-color: #f8fafc;
         }
         .option-btn:active {
             transform: scale(0.98);
         }
-        .result-screen { animation: fadeIn 0.4s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .content-wrap {
+            position: relative;
+            z-index: 10;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
     </style>
 </head>
 <body>
@@ -67,7 +70,7 @@
                 title: "رسالة بريد عاجلة!",
                 q: "وصلك إيميل يطلب منك تحديث كلمة سرك فوراً عبر رابط خارجي لأن حسابك سيتوقف. ماذا تفعل؟",
                 options: [
-                    { text: "أضغط على الرابط بسرعة", correct: false, msg: "خطأ! هذا أسلوب 'الاستعجال' الذي يستخدمه المخترقون للتصيد." },
+                    { text: "أضغط على الرابط بسرعة", correct: false, msg: "خطأ! هذا أسلوب الاستعجال الذي يستخدمه المخترقون للتصيد." },
                     { text: "أحذف الرسالة وأبلغ قسم التقنية", correct: true, msg: "ممتاز! الوعي بأساليب التصيد هو أهم خط دفاع." }
                 ]
             },
@@ -128,7 +131,7 @@
             {
                 icon: "📞",
                 title: "مكالمة غريبة",
-                q: "اتصل بك شخص يدعي أنه من 'الدعم الفني' ويطلب كود التحقق الذي وصلك. ماذا تفعل؟",
+                q: "اتصل بك شخص يدعي أنه من الدعم الفني ويطلب كود التحقق الذي وصلك. ماذا تفعل؟",
                 options: [
                     { text: "أعطيه الكود ليساعدني", correct: false, msg: "خطر! لا تشارك أبداً أكواد التحقق (OTP) مع أي شخص." },
                     { text: "أنهي المكالمة فوراً", correct: true, msg: "أحسنت! الشركات الحقيقية لا تطلب منك أكوادك السرية أبداً." }
@@ -160,12 +163,12 @@
 
         function startScreen() {
             box.innerHTML = `
-                <div class="p-10 text-center flex-1 flex flex-col justify-center result-screen">
-                    <div class="text-8xl mb-6">🛡️</div>
-                    <h1 class="text-3xl font-black text-slate-900 mb-4">اختبار الوعي الأمني</h1>
-                    <p class="text-slate-600 mb-8 text-lg leading-relaxed">عشرة مواقف ستحدد مدى قوتك في مواجهة التهديدات الرقمية.</p>
-                    <button onclick="renderQuestion()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl text-xl shadow-lg hover:bg-blue-700 active:scale-95 transition-all">
-                        ابدأ التحدي الآن
+                <div class="content-wrap p-10 text-center justify-center">
+                    <div class="text-8xl mb-6">🕵️‍♂️</div>
+                    <h1 class="text-3xl font-black text-slate-900 mb-4">اختبار البطل السيبراني</h1>
+                    <p class="text-slate-600 mb-8 text-lg">10 مواقف واقعية ستحدد مستواك في حماية البيانات.</p>
+                    <button onclick="renderQuestion()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl text-xl shadow-lg hover:bg-blue-700 transition-all">
+                        ابدأ التحدي
                     </button>
                 </div>
             `;
@@ -178,9 +181,9 @@
                 const progress = ((currentStep) / allQuestions.length) * 100;
                 
                 box.innerHTML = `
-                    <div class="p-8 flex-1 flex flex-col result-screen">
+                    <div class="content-wrap p-8">
                         <div class="w-full bg-slate-100 h-2 rounded-full mb-6">
-                            <div class="bg-blue-600 h-2 rounded-full transition-all duration-500" style="width: ${progress}%"></div>
+                            <div class="bg-blue-600 h-2 rounded-full transition-all" style="width: ${progress}%"></div>
                         </div>
                         <div class="flex justify-between items-center mb-4">
                             <span class="bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-xs font-bold">موقف ${currentStep + 1}</span>
@@ -193,10 +196,10 @@
                         <div class="bg-slate-50 p-5 rounded-2xl mb-8 border-r-4 border-blue-500">
                             <p class="text-slate-700 text-lg font-medium leading-relaxed">${item.q}</p>
                         </div>
-                        <div class="space-y-4 mt-auto">
-                            ${item.options.map((o, index) => `
-                                <button id="opt-${index}" onclick="showFeedback(${o.correct}, '${o.msg.replace(/'/g, "\\'")}')" 
-                                    class="option-btn w-full p-5 rounded-xl text-right font-bold text-slate-700 shadow-sm border-2">
+                        <div class="space-y-4 mt-auto" style="position: relative; z-index: 100;">
+                            ${item.options.map((o, idx) => `
+                                <button onclick="showFeedback(${o.correct}, '${o.msg}')" 
+                                    class="option-btn p-5 rounded-xl text-right font-bold text-slate-700 shadow-sm">
                                     ${o.text}
                                 </button>
                             `).join('')}
@@ -211,37 +214,35 @@
         function showFeedback(isCorrect, message) {
             if(isCorrect) score++;
             box.innerHTML = `
-                <div class="p-10 text-center flex-1 flex flex-col justify-center result-screen">
+                <div class="content-wrap p-10 text-center justify-center">
                     <div class="text-8xl mb-6">${isCorrect ? '✨' : '⚠️'}</div>
                     <h2 class="text-3xl font-bold mb-4 ${isCorrect ? 'text-green-600' : 'text-red-500'}">
                         ${isCorrect ? 'إجابة ذكية!' : 'تصرف خطر!'}
                     </h2>
                     <div class="bg-slate-50 p-6 rounded-2xl mb-10">
-                        <p class="text-slate-600 text-xl font-medium leading-relaxed">${message}</p>
+                        <p class="text-slate-600 text-xl font-medium">${message}</p>
                     </div>
                     <button onclick="renderQuestion()" class="w-full bg-slate-900 text-white font-bold py-5 rounded-2xl text-lg shadow-lg hover:bg-black transition-all">
-                        ${currentStep < allQuestions.length - 1 ? 'الموقف التالي' : 'رؤية النتيجة النهائية'}
+                        ${currentStep < allQuestions.length - 1 ? 'الموقف التالي' : 'رؤية النتيجة'}
                     </button>
                 </div>
             `;
         }
 
         function showFinal() {
-            let rank = "مبتدئ سيبراني 🐣";
-            let color = "text-red-500";
-            if(score === 10) { rank = "بطل سيبراني أسطوري! 🏆"; color = "text-green-600"; }
-            else if(score >= 8) { rank = "خبير أمني محترف 🛡️"; color = "text-blue-600"; }
-            else if(score >= 5) { rank = "مستوى متوسط 🧐"; color = "text-yellow-600"; }
+            let rank = "بطل سيبراني أسطوري! 🏆";
+            let color = "text-green-600";
+            if(score < 5) { rank = "مبتدئ سيبراني 🐣"; color = "text-red-500"; }
+            else if(score < 8) { rank = "واعي ومحترف 🛡️"; color = "text-blue-600"; }
 
             box.innerHTML = `
-                <div class="p-10 text-center flex-1 flex flex-col justify-center result-screen">
-                    <h2 class="text-slate-400 font-bold uppercase tracking-widest mb-2">النتيجة النهائية</h2>
+                <div class="content-wrap p-10 text-center justify-center">
+                    <h2 class="text-slate-400 font-bold uppercase mb-2">النتيجة النهائية</h2>
                     <div class="text-9xl font-black text-blue-600 mb-4">${score}/10</div>
                     <p class="text-2xl font-bold ${color} mb-10">${rank}</p>
                     <button onclick="location.reload()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl text-xl shadow-xl hover:bg-blue-700 transition-all">
                         إعادة التحدي
                     </button>
-                    <p class="mt-6 text-slate-400 text-sm">وعيك يحمي الجميع.. شارك التحدي!</p>
                 </div>
             `;
         }
