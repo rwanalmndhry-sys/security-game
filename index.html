@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -9,150 +9,136 @@
     <style>
         body { 
             font-family: 'Tajawal', sans-serif; 
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
         }
         .app-container {
             width: 100%;
-            max-width: 480px;
+            max-width: 450px;
             background: #ffffff;
-            border-radius: 2rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            min-height: 600px;
+            border-radius: 1.5rem;
+            min-height: 550px;
             display: flex;
             flex-direction: column;
-            position: relative;
-            z-index: 1;
-            overflow: hidden;
+            padding: 2rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
         }
         .option-btn {
-            position: relative;
-            z-index: 50 !important; /* نضمن أن الزر فوق كل شيء */
-            transition: all 0.2s ease;
-            border: 2px solid #e2e8f0; 
-            background-color: #ffffff;
-            cursor: pointer;
-            display: block;
             width: 100%;
-            pointer-events: auto !important; /* نضمن أن الزر يستقبل النقر */
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 1rem;
+            background: #ffffff;
+            font-weight: bold;
+            color: #334155;
+            text-align: right;
+            cursor: pointer;
+            transition: 0.2s;
+            /* منع أي عنصر آخر من تغطية الزر */
+            position: relative;
+            z-index: 999;
         }
         .option-btn:hover {
             border-color: #3b82f6;
             background-color: #f8fafc;
         }
         .option-btn:active {
-            transform: scale(0.98);
-        }
-        .content-wrap {
-            position: relative;
-            z-index: 10;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+            transform: scale(0.97);
         }
     </style>
 </head>
 <body>
 
     <div id="game-box" class="app-container">
-        <!-- يتم التحكم بالمحتوى بواسطة JS -->
+        <!-- المحتوى يتغير بواسطة الجافاسكريبت -->
     </div>
 
     <script>
         const allQuestions = [
             {
-                icon: "📧",
-                title: "رسالة بريد عاجلة!",
+                icon: "📧", title: "رسالة بريد عاجلة!",
                 q: "وصلك إيميل يطلب منك تحديث كلمة سرك فوراً عبر رابط خارجي لأن حسابك سيتوقف. ماذا تفعل؟",
                 options: [
-                    { text: "أضغط على الرابط بسرعة", correct: false, msg: "خطأ! هذا أسلوب الاستعجال الذي يستخدمه المخترقون للتصيد." },
+                    { text: "أضغط على الرابط بسرعة", correct: false, msg: "خطأ! هذا أسلوب 'الاستعجال' الذي يستخدمه المخترقون للتصيد." },
                     { text: "أحذف الرسالة وأبلغ قسم التقنية", correct: true, msg: "ممتاز! الوعي بأساليب التصيد هو أهم خط دفاع." }
                 ]
             },
             {
-                icon: "🔐",
-                title: "قوة كلمة المرور",
+                icon: "🔐", title: "قوة كلمة المرور",
                 q: "أي من هذه الخيارات تعتبر الأقوى لحماية حساباتك؟",
                 options: [
-                    { text: "Admin@123", correct: false, msg: "ضعيفة! الكلمات الشائعة يسهل اختراقها ببرامج التخمين." },
-                    { text: "Blue#Tree@Sky2024", correct: true, msg: "رائع! استخدام الرموز والطول يجعل الاختراق شبه مستحيل." }
+                    { text: "Admin@123", correct: false, msg: "ضعيفة! الكلمات الشائعة يسهل اختراقها." },
+                    { text: "Blue#Tree@Sky2024", correct: true, msg: "رائع! الطول والرموز هما مفتاح الأمان." }
                 ]
             },
             {
-                icon: "☕",
-                title: "استراحة المكتب",
+                icon: "☕", title: "استراحة المكتب",
                 q: "ستذهب لإحضار قهوة وستعود بعد دقيقتين. كيف تترك جهازك؟",
                 options: [
-                    { text: "أتركه مفتوحاً للمدة القصيرة", correct: false, msg: "غير آمن! دقيقة واحدة تكفي للوصول لبيانات حساسة." },
-                    { text: "أقفل الشاشة (Win + L)", correct: true, msg: "بطل! قفل الشاشة يجب أن يكون حركة تلقائية دائماً." }
+                    { text: "أتركه مفتوحاً للمدة القصيرة", correct: false, msg: "غير آمن! دقيقة واحدة تكفي للوصول لبياناتك." },
+                    { text: "أقفل الشاشة (Win + L)", correct: true, msg: "بطل! قفل الشاشة حركة تلقائية ذكية." }
                 ]
             },
             {
-                icon: "💾",
-                title: "الفلاش المفقود",
+                icon: "💾", title: "الفلاش المفقود",
                 q: "وجدت فلاش ميموري (USB) في المصعد مكتوب عليه 'الرواتب'. ماذا تفعل؟",
                 options: [
-                    { text: "أوصله بجهازي لأعرف صاحبه", correct: false, msg: "خطر جداً! قد يحتوي على برمجيات خبيثة تخترق الشبكة فوراً." },
-                    { text: "أسلمه للأمن دون فتحه", correct: true, msg: "تصرف ذكي! الفلاشات المجهولة هي فخاخ فيروسات شهيرة." }
+                    { text: "أوصله بجهازي لأعرف صاحبه", correct: false, msg: "خطر جداً! قد يحتوي على برمجيات خبيثة." },
+                    { text: "أسلمه للأمن دون فتحه", correct: true, msg: "تصرف ذكي! الفلاشات المجهولة فخاخ فيروسات." }
                 ]
             },
             {
-                icon: "🛡️",
-                title: "رسائل الجوال",
+                icon: "🛡️", title: "رسائل الجوال",
                 q: "وصلتك رسالة نصية تطلب ضغط رابط لتحديث بياناتك البنكية فوراً. ماذا تفعل؟",
                 options: [
-                    { text: "أضغط للتأكد من حسابي", correct: false, msg: "خطأ! الروابط في الرسائل المجهولة هي أسرع وسيلة للسرقة." },
-                    { text: "أتجاهل الرسالة وأبلغ عنها", correct: true, msg: "أحسنت! تجاهل الروابط المشبوهة هو ذكاء سيبراني." }
+                    { text: "أضغط للتأكد من حسابي", correct: false, msg: "خطأ! الروابط في الرسائل المجهولة وسيلة للسرقة." },
+                    { text: "أتجاهل الرسالة وأبلغ عنها", correct: true, msg: "أحسنت! تجاهل الروابط المشبوهة ذكاء سيبراني." }
                 ]
             },
             {
-                icon: "🌐",
-                title: "واي فاي المقهى",
+                icon: "🌐", title: "واي فاي المقهى",
                 q: "أنت في مقهى وتحتاج للدخول على حساب العمل الحساس. ماذا تستخدم؟",
                 options: [
-                    { text: "واي فاي المقهى المجاني", correct: false, msg: "خطر! الشبكات العامة يسهل التجسس عليها وسرقة بياناتك." },
-                    { text: "نقطة اتصال شخصية (4G/5G)", correct: true, msg: "رائع! استخدام اتصالك الخاص أكثر أماناً للعمل الحساس." }
+                    { text: "واي فاي المقهى المجاني", correct: false, msg: "خطر! الشبكات العامة يسهل التجسس عليها." },
+                    { text: "نقطة اتصال شخصية (4G/5G)", correct: true, msg: "رائع! اتصالك الخاص أكثر أماناً." }
                 ]
             },
             {
-                icon: "🆙",
-                title: "تحديثات النظام",
+                icon: "🆙", title: "تحديثات النظام",
                 q: "ظهر لك إشعار يطلب تحديث نظام التشغيل فوراً. ماذا تفعل؟",
                 options: [
-                    { text: "تأجيل التحديث للأسبوع القادم", correct: false, msg: "خطأ! التحديثات تحتوي على إصلاحات لثغرات أمنية خطيرة." },
-                    { text: "تثبيت التحديث في أقرب وقت", correct: true, msg: "بطل! إبقاء نظامك محدثاً يسد الثغرات أمام المخترقين." }
+                    { text: "تأجيل التحديث للأسبوع القادم", correct: false, msg: "خطأ! التحديثات تسد ثغرات أمنية خطيرة." },
+                    { text: "تثبيت التحديث في أقرب وقت", correct: true, msg: "بطل! إبقاء نظامك محدثاً يحميك من الاختراق." }
                 ]
             },
             {
-                icon: "📞",
-                title: "مكالمة غريبة",
+                icon: "📞", title: "مكالمة غريبة",
                 q: "اتصل بك شخص يدعي أنه من الدعم الفني ويطلب كود التحقق الذي وصلك. ماذا تفعل؟",
                 options: [
-                    { text: "أعطيه الكود ليساعدني", correct: false, msg: "خطر! لا تشارك أبداً أكواد التحقق (OTP) مع أي شخص." },
-                    { text: "أنهي المكالمة فوراً", correct: true, msg: "أحسنت! الشركات الحقيقية لا تطلب منك أكوادك السرية أبداً." }
+                    { text: "أعطيه الكود ليساعدني", correct: false, msg: "خطر! لا تشارك أبداً أكواد التحقق مع أي شخص." },
+                    { text: "أنهي المكالمة فوراً", correct: true, msg: "أحسنت! الشركات لا تطلب أكوادك السرية." }
                 ]
             },
             {
-                icon: "📸",
-                title: "التصوير في العمل",
+                icon: "📸", title: "التصوير في العمل",
                 q: "تريد تصوير سيلفي في المكتب، وخلفك تظهر شاشة زميلك بها بيانات. ماذا تفعل؟",
                 options: [
-                    { text: "أنشر الصورة، لا أحد سيركز", correct: false, msg: "خطر! تسريب بيانات العمل عبر الصور هو خطأ أمني جسيم." },
-                    { text: "أغير المكان لضمان خصوصية البيانات", correct: true, msg: "ممتاز! الحفاظ على خصوصية ما يظهر في الصور جزء من الأمان." }
+                    { text: "أنشر الصورة، لا أحد سيركز", correct: false, msg: "خطر! تسريب بيانات العمل عبر الصور خطأ جسيم." },
+                    { text: "أغير المكان لضمان الخصوصية", correct: true, msg: "ممتاز! الحفاظ على الخصوصية جزء من الأمان." }
                 ]
             },
             {
-                icon: "📱",
-                title: "تطبيقات مجهولة",
+                icon: "📱", title: "تطبيقات مجهولة",
                 q: "وجدت تطبيقاً يوفر ميزات إضافية مجانية لكنه من خارج المتجر الرسمي. ماذا تفعل؟",
                 options: [
-                    { text: "أقوم بتحميله وتجربته", correct: false, msg: "خطر! التطبيقات خارج المتاجر الرسمية غالباً ما تكون محقونة بفيروسات." },
-                    { text: "أكتفي بالتطبيقات الرسمية فقط", correct: true, msg: "رائع! تحميل التطبيقات من مصادر موثوقة يحمي هاتفك من التجسس." }
+                    { text: "أقوم بتحميله وتجربته", correct: false, msg: "خطر! قد يكون محقوناً بفيروسات تجسس." },
+                    { text: "أكتفي بالتطبيقات الرسمية", correct: true, msg: "رائع! المصادر الموثوقة هي الأسلم دائماً." }
                 ]
             }
         ];
@@ -163,13 +149,11 @@
 
         function startScreen() {
             box.innerHTML = `
-                <div class="content-wrap p-10 text-center justify-center">
-                    <div class="text-8xl mb-6">🕵️‍♂️</div>
-                    <h1 class="text-3xl font-black text-slate-900 mb-4">اختبار البطل السيبراني</h1>
-                    <p class="text-slate-600 mb-8 text-lg">10 مواقف واقعية ستحدد مستواك في حماية البيانات.</p>
-                    <button onclick="renderQuestion()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl text-xl shadow-lg hover:bg-blue-700 transition-all">
-                        ابدأ التحدي
-                    </button>
+                <div class="text-center my-auto">
+                    <div class="text-7xl mb-6">🛡️</div>
+                    <h1 class="text-2xl font-black mb-4 text-slate-800">تحدي البطل السيبراني</h1>
+                    <p class="text-slate-600 mb-8">10 مواقف ستحدد مدى وعيك الرقمي</p>
+                    <button onclick="renderQuestion()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700">ابدأ التحدي</button>
                 </div>
             `;
         }
@@ -179,74 +163,49 @@
             if(currentStep < allQuestions.length) {
                 const item = allQuestions[currentStep];
                 const progress = ((currentStep) / allQuestions.length) * 100;
-                
                 box.innerHTML = `
-                    <div class="content-wrap p-8">
-                        <div class="w-full bg-slate-100 h-2 rounded-full mb-6">
-                            <div class="bg-blue-600 h-2 rounded-full transition-all" style="width: ${progress}%"></div>
-                        </div>
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-xs font-bold">موقف ${currentStep + 1}</span>
-                            <span class="text-slate-400 font-bold">${currentStep + 1}/10</span>
-                        </div>
-                        <div class="text-center mb-6">
-                            <div class="text-6xl mb-2">${item.icon}</div>
-                            <h2 class="text-2xl font-bold text-slate-800">${item.title}</h2>
-                        </div>
-                        <div class="bg-slate-50 p-5 rounded-2xl mb-8 border-r-4 border-blue-500">
-                            <p class="text-slate-700 text-lg font-medium leading-relaxed">${item.q}</p>
-                        </div>
-                        <div class="space-y-4 mt-auto" style="position: relative; z-index: 100;">
-                            ${item.options.map((o, idx) => `
-                                <button onclick="showFeedback(${o.correct}, '${o.msg}')" 
-                                    class="option-btn p-5 rounded-xl text-right font-bold text-slate-700 shadow-sm">
-                                    ${o.text}
-                                </button>
-                            `).join('')}
-                        </div>
+                    <div class="w-full bg-slate-100 h-1.5 rounded-full mb-6">
+                        <div class="bg-blue-600 h-1.5 rounded-full transition-all" style="width: ${progress}%"></div>
+                    </div>
+                    <div class="text-center mb-6">
+                        <div class="text-5xl mb-2">${item.icon}</div>
+                        <h2 class="text-xl font-bold text-slate-800">${item.title}</h2>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl mb-6 border-r-4 border-blue-500">
+                        <p class="text-slate-700 font-medium">${item.q}</p>
+                    </div>
+                    <div class="mt-auto">
+                        ${item.options.map(o => `
+                            <button onclick="showFeedback(${o.correct}, '${o.msg}')" class="option-btn">${o.text}</button>
+                        `).join('')}
                     </div>
                 `;
-            } else {
-                showFinal();
-            }
+            } else { showFinal(); }
         }
 
         function showFeedback(isCorrect, message) {
             if(isCorrect) score++;
             box.innerHTML = `
-                <div class="content-wrap p-10 text-center justify-center">
-                    <div class="text-8xl mb-6">${isCorrect ? '✨' : '⚠️'}</div>
-                    <h2 class="text-3xl font-bold mb-4 ${isCorrect ? 'text-green-600' : 'text-red-500'}">
-                        ${isCorrect ? 'إجابة ذكية!' : 'تصرف خطر!'}
-                    </h2>
-                    <div class="bg-slate-50 p-6 rounded-2xl mb-10">
-                        <p class="text-slate-600 text-xl font-medium">${message}</p>
-                    </div>
-                    <button onclick="renderQuestion()" class="w-full bg-slate-900 text-white font-bold py-5 rounded-2xl text-lg shadow-lg hover:bg-black transition-all">
-                        ${currentStep < allQuestions.length - 1 ? 'الموقف التالي' : 'رؤية النتيجة'}
-                    </button>
+                <div class="text-center my-auto">
+                    <div class="text-7xl mb-4">${isCorrect ? '✨' : '⚠️'}</div>
+                    <h2 class="text-2xl font-bold mb-4 ${isCorrect ? 'text-green-600' : 'text-red-500'}">${isCorrect ? 'إجابة ذكية!' : 'تصرف خطر!'}</h2>
+                    <div class="bg-slate-50 p-4 rounded-xl mb-8"><p class="text-slate-600 font-medium">${message}</p></div>
+                    <button onclick="renderQuestion()" class="w-full bg-slate-800 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-black">الموقف التالي</button>
                 </div>
             `;
         }
 
         function showFinal() {
-            let rank = "بطل سيبراني أسطوري! 🏆";
-            let color = "text-green-600";
-            if(score < 5) { rank = "مبتدئ سيبراني 🐣"; color = "text-red-500"; }
-            else if(score < 8) { rank = "واعي ومحترف 🛡️"; color = "text-blue-600"; }
-
+            let rank = score >= 8 ? "بطل سيبراني أسطوري! 🏆" : (score >= 5 ? "واعي ومحترف 🛡️" : "مبتدئ سيبراني 🐣");
             box.innerHTML = `
-                <div class="content-wrap p-10 text-center justify-center">
-                    <h2 class="text-slate-400 font-bold uppercase mb-2">النتيجة النهائية</h2>
-                    <div class="text-9xl font-black text-blue-600 mb-4">${score}/10</div>
-                    <p class="text-2xl font-bold ${color} mb-10">${rank}</p>
-                    <button onclick="location.reload()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl text-xl shadow-xl hover:bg-blue-700 transition-all">
-                        إعادة التحدي
-                    </button>
+                <div class="text-center my-auto">
+                    <h2 class="text-slate-400 font-bold mb-2">النتيجة النهائية</h2>
+                    <div class="text-8xl font-black text-blue-600 mb-4">${score}/10</div>
+                    <p class="text-xl font-bold text-slate-800 mb-8">${rank}</p>
+                    <button onclick="location.reload()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg">إعادة التحدي</button>
                 </div>
             `;
         }
-
         startScreen();
     </script>
 </body>
