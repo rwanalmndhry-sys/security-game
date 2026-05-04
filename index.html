@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحدي بطل الأمن السيبراني (10 مراحل)</title>
+    <title>تحدي بطل الأمن السيبراني</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
@@ -34,14 +33,22 @@
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        /* تعديل هنا: جعل الحدود رمادية فاتحة جداً في البداية */
         .option-btn {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 2px solid #e2e8f0;
+            transition: all 0.2s ease-in-out;
+            border: 2px solid #f1f5f9; 
+            background-color: #ffffff;
+            cursor: pointer;
+            outline: none;
         }
+        /* تظهر الألوان فقط عند تمرير الفأرة أو الضغط */
         .option-btn:hover {
             border-color: #3b82f6;
             background-color: #eff6ff;
-            transform: translateX(-5px);
+            transform: translateY(-2px);
+        }
+        .option-btn:active {
+            transform: scale(0.98);
         }
         .result-screen { animation: fadeIn 0.4s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -50,7 +57,7 @@
 <body>
 
     <div id="game-box" class="app-container">
-        <!-- المحتوى يتغير بواسطة JavaScript -->
+        <!-- يتم التحكم بالمحتوى بواسطة JS -->
     </div>
 
     <script>
@@ -156,9 +163,9 @@
                 <div class="p-10 text-center flex-1 flex flex-col justify-center result-screen">
                     <div class="text-8xl mb-6">🛡️</div>
                     <h1 class="text-3xl font-black text-slate-900 mb-4">اختبار الوعي الأمني</h1>
-                    <p class="text-slate-600 mb-8 text-lg leading-relaxed">10 مواقف ستكشف هل أنت فريسة سهلة أم حصن منيع للمعلومات!</p>
+                    <p class="text-slate-600 mb-8 text-lg leading-relaxed">عشرة مواقف ستحدد مدى قوتك في مواجهة التهديدات الرقمية.</p>
                     <button onclick="renderQuestion()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl text-xl shadow-lg hover:bg-blue-700 active:scale-95 transition-all">
-                        ابدأ التحدي (10 مراحل)
+                        ابدأ التحدي الآن
                     </button>
                 </div>
             `;
@@ -177,7 +184,7 @@
                         </div>
                         <div class="flex justify-between items-center mb-4">
                             <span class="bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-xs font-bold">موقف ${currentStep + 1}</span>
-                            <span class="text-slate-400 font-bold">${currentStep + 1}/${allQuestions.length}</span>
+                            <span class="text-slate-400 font-bold">${currentStep + 1}/10</span>
                         </div>
                         <div class="text-center mb-6">
                             <div class="text-6xl mb-2">${item.icon}</div>
@@ -186,9 +193,10 @@
                         <div class="bg-slate-50 p-5 rounded-2xl mb-8 border-r-4 border-blue-500">
                             <p class="text-slate-700 text-lg font-medium leading-relaxed">${item.q}</p>
                         </div>
-                        <div class="space-y-3 mt-auto">
-                            ${item.options.map(o => `
-                                <button onclick="showFeedback(${o.correct}, '${o.msg}')" class="option-btn w-full p-4 rounded-xl bg-white text-right font-bold text-slate-700 shadow-sm">
+                        <div class="space-y-4 mt-auto">
+                            ${item.options.map((o, index) => `
+                                <button id="opt-${index}" onclick="showFeedback(${o.correct}, '${o.msg.replace(/'/g, "\\'")}')" 
+                                    class="option-btn w-full p-5 rounded-xl text-right font-bold text-slate-700 shadow-sm border-2">
                                     ${o.text}
                                 </button>
                             `).join('')}
@@ -233,7 +241,7 @@
                     <button onclick="location.reload()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl text-xl shadow-xl hover:bg-blue-700 transition-all">
                         إعادة التحدي
                     </button>
-                    <p class="mt-6 text-slate-400 text-sm">وعيك يحمي الجميع.. شارك التحدي مع أصدقائك!</p>
+                    <p class="mt-6 text-slate-400 text-sm">وعيك يحمي الجميع.. شارك التحدي!</p>
                 </div>
             `;
         }
