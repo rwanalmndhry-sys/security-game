@@ -2,11 +2,15 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحدي الوعي السيبراني</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>تحدي الوعي الرقمي</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f1f5f9;
+        }
         body { 
             font-family: 'Tajawal', sans-serif; 
             background-color: #0f172a;
@@ -15,68 +19,102 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            /* منع التحديد الأزرق في الهواتف */
+            -webkit-tap-highlight-color: transparent;
         }
         .quiz-card {
-            background: white;
-            width: 95%;
-            max-width: 450px;
-            border-radius: 24px;
-            padding: 30px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            background: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            margin: 15px;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             display: flex;
             flex-direction: column;
-            min-height: 500px;
+            min-height: 600px;
+            position: relative;
+        }
+        .icon-circle {
+            width: 90px;
+            height: 90px;
+            background: #f8fafc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+            margin: -45px auto 20px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border: 5px solid #ffffff;
         }
         .btn-option {
             width: 100%;
-            padding: 18px;
-            margin-bottom: 15px;
-            border: 2px solid #e2e8f0;
-            border-radius: 16px;
-            background: white;
-            font-weight: 700;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            border: 2px solid #f1f5f9;
+            border-radius: 18px;
+            background: #f8fafc;
+            font-weight: 600;
             text-align: right;
             cursor: pointer;
-            transition: 0.3s;
-            color: #1e293b;
-            display: block;
-            position: relative;
-            z-index: 10;
+            transition: all 0.2s ease;
+            color: #334155;
+            outline: none !important;
         }
         .btn-option:hover {
-            border-color: #3b82f6;
+            border-color: var(--primary);
             background-color: #eff6ff;
+            transform: translateY(-2px);
+        }
+        /* منع أي تحديد أو برواز عند النقر في الهاتف */
+        .btn-option:focus, .btn-option:active {
+            outline: none;
+            box-shadow: none;
+            background-color: #e2e8f0;
+        }
+        .progress-bar {
+            height: 6px;
+            background: #e2e8f0;
+            width: 100%;
+            position: absolute;
+            top: 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.4s ease;
         }
     </style>
 </head>
 <body>
 
     <div id="game-container" class="quiz-card">
-        <!-- يتم التحديث بواسطة JS -->
+        <!-- المحتوى يتغير بالجاوا سكريبت -->
     </div>
 
     <script>
         const questions = [
             { icon: "📧", q: "وصلك إيميل يطلب منك تحديث كلمة سرك فوراً عبر رابط خارجي لأن حسابك سيتوقف. ماذا تفعل؟", 
-              options: [{t: "أضغط على الرابط بسرعة", c: false, m: "خطأ! هذا تصيد سيبراني."}, {t: "أحذف الرسالة وأبلغ قسم التقنية", c: true, m: "ممتاز! وعيك يحميك."}] },
-            { icon: "🔐", q: "أي من هذه الخيارات تعتبر الأقوى لحماية حساباتك؟", 
+              options: [{t: "أضغط على الرابط بسرعة", c: false, m: "خطأ! هذا أسلوب 'الاستعجال' للتصيد."}, {t: "أحذف الرسالة وأبلغ قسم التقنية", c: true, m: "ممتاز! وعيك يحمي المؤسسة."}] },
+            { icon: "🔐", q: "أي من هذه الخيارات تعتبر الأقوى لحماية حساباتك الشخصية؟", 
               options: [{t: "Admin@123", c: false, m: "ضعيفة جداً وسهلة التخمين."}, {t: "Blue#Tree@Sky2024", c: true, m: "رائع! الطول والرموز هما السر."}] },
             { icon: "☕", q: "ستذهب لإحضار قهوة وستعود بعد دقيقتين. كيف تترك جهازك؟", 
-              options: [{t: "أتركه مفتوحاً للمدة القصيرة", c: false, m: "خطر! دقيقة واحدة تكفي لسرقة بياناتك."}, {t: "أقفل الشاشة (Win + L)", c: true, m: "أحسنت! إجراء وقائي بسيط ومهم."}] },
+              options: [{t: "أتركه مفتوحاً للمدة القصيرة", c: false, m: "خطر! دقيقة واحدة تكفي للوصول لبياناتك."}, {t: "أقفل الشاشة (Win + L)", c: true, m: "أحسنت! إجراء وقائي بسيط ومحترف."}] },
             { icon: "💾", q: "وجدت فلاش ميموري (USB) في المصعد مكتوب عليه 'الرواتب'. ماذا تفعل؟", 
-              options: [{t: "أوصله بجهازي لأعرف صاحبه", c: false, m: "خطر! الفلاشات المجهولة تحتوي فيروسات."}, {t: "أسلمه للأمن دون فتحه", c: true, m: "ذكي! لا تثق بالأجهزة المجهولة."}] },
-            { icon: "🛡️", q: "وصلتك رسالة نصية تطلب ضغط رابط لتحديث بياناتك البنكية فوراً. ماذا تفعل؟", 
-              options: [{t: "أضغط للتأكد من حسابي", c: false, m: "خطأ! البنوك لا تطلب بيانات عبر روابط SMS."}, {t: "أتجاهل الرسالة وأبلغ عنها", c: true, m: "بطل! التجاهل هو أفضل وسيلة."}] },
-            { icon: "🌐", q: "أنت في مقهى وتحتاج للدخول على حساب العمل الحساس. ماذا تستخدم؟", 
-              options: [{t: "واي فاي المقهى المجاني", c: false, m: "خطر! الشبكات العامة سهلة التجسس."}, {t: "نقطة اتصال شخصية (4G/5G)", c: true, m: "رائع! الاتصال الخاص أكثر أماناً."}] },
-            { icon: "🆙", q: "ظهر لك إشعار يطلب تحديث نظام التشغيل فوراً. ماذا تفعل؟", 
-              options: [{t: "تأجيل التحديث للأسبوع القادم", c: false, m: "خطأ! التحديثات تسد ثغرات أمنية."}, {t: "تثبيت التحديث في أقرب وقت", c: true, m: "ممتاز! التحديث المستمر يحميك."}] },
-            { icon: "📞", q: "اتصل بك شخص يدعي أنه من الدعم الفني ويطلب كود التحقق. ماذا تفعل؟", 
-              options: [{t: "أعطيه الكود ليساعدني", c: false, m: "خطر! لا تشارك كود التحقق أبداً."}, {t: "أنهي المكالمة فوراً", c: true, m: "أحسنت! الشركات لا تطلب أكوادك."}] },
-            { icon: "📸", q: "تريد تصوير سيلفي في المكتب، وخلفك تظهر شاشة زميلك بها بيانات. ماذا تفعل؟", 
-              options: [{t: "أنشر الصورة، لا أحد سيركز", c: false, m: "خطأ! قد تسرب بيانات حساسة بالصدفة."}, {t: "أغير المكان لضمان الخصوصية", c: true, m: "واعي جداً! الخصوصية تبدأ منك."}] },
-            { icon: "📱", q: "وجدت تطبيقاً يوفر ميزات إضافية لكنه من خارج المتجر الرسمي. ماذا تفعل؟", 
-              options: [{t: "أقوم بتحميله وتجربته", c: false, m: "خطر! قد يكون التطبيق ملغماً بالفيروسات."}, {t: "أكتفي بالتطبيقات الرسمية", c: true, m: "رائع! المصادر الرسمية هي الأكثر أماناً."}] }
+              options: [{t: "أوصله بجهازي لأعرف صاحبه", c: false, m: "خطر! الفلاشات المجهولة تحتوي برمجيات خبيثة."}, {t: "أسلمه للأمن دون فتحه", c: true, m: "ذكي! لا تثق أبداً بالأجهزة المجهولة."}] },
+            { icon: "🛡️", q: "وصلتك رسالة نصية تطلب ضغط رابط لتتجنب إيقاف بطاقتك البنكية. ماذا تفعل؟", 
+              options: [{t: "أضغط للتأكد من حسابي", c: false, m: "خطأ! البنوك لا تطلب ذلك عبر الرسائل النصية."}, {t: "أتجاهل الرسالة وأبلغ عنها", c: true, m: "بطل! التجاهل هو أفضل رد على المحتالين."}] },
+            { icon: "🌐", q: "أنت في مطار وتحتاج للدخول على بريدك الرسمي. ماذا تستخدم؟", 
+              options: [{t: "واي فاي المطار المجاني", c: false, m: "خطر! الشبكات العامة غير آمنة للعمل."}, {t: "نقطة اتصال شخصية (Hotspot)", c: true, m: "رائع! اتصالك الخاص هو الأكثر أماناً."}] },
+            { icon: "🆙", q: "ظهر لك إشعار يطلب تحديث البرامج فوراً. ماذا تفعل؟", 
+              options: [{t: "تأجيل التحديث لنهاية الشهر", c: false, m: "خطأ! التحديثات تعالج ثغرات أمنية خطيرة."}, {t: "تثبيت التحديث فوراً", c: true, m: "ممتاز! التحديث المستمر هو درعك الأول."}] },
+            { icon: "📞", q: "اتصل بك شخص يدعي أنه من البنك ويطلب كود التحقق الذي وصلك. ماذا تفعل؟", 
+              options: [{t: "أعطيه الكود ليحدث بياناتي", c: false, m: "خطر! كود التحقق سر لا يشارك أبداً."}, {t: "أغلق الخط فوراً", c: true, m: "أحسنت! البنوك لا تطلب الكود هاتفياً."}] },
+            { icon: "📸", q: "تريد تصوير لقطة للمكتب، وخلفك شاشة تظهر فيها بيانات العملاء. ماذا تفعل؟", 
+              options: [{t: "ألتقط الصورة، لا أحد سيهتم", c: false, m: "خطأ! قد تسرب معلومات حساسة دون قصد."}, {t: "أغلق الشاشة قبل التصوير", c: true, m: "واعي جداً! الخصوصية تبدأ بتصرفاتك."}] },
+            { icon: "📱", q: "وجدت تطبيقاً يوفر ميزات خرافية لكنه يطلب صلاحية الوصول لكل ملفاتك. ماذا تفعل؟", 
+              options: [{t: "أوافق للحصول على الميزات", c: false, m: "خطر! هذه الصلاحيات قد تستخدم للتجسس."}, {t: "أرفض وأحذف التطبيق", c: true, m: "رائع! حماية بياناتك أهم من أي تطبيق."}] }
         ];
 
         let currentIdx = 0;
@@ -85,11 +123,11 @@
 
         function initGame() {
             container.innerHTML = `
-                <div class="text-center my-auto">
-                    <div class="text-7xl mb-6">🛡️</div>
-                    <h1 class="text-2xl font-black text-slate-800 mb-4">اختبار البطل السيبراني</h1>
-                    <p class="text-slate-500 mb-8 font-medium">10 مواقف لتحديد قوة دفاعك الرقمي</p>
-                    <button onclick="showQuestion()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700 transition-all">ابدأ الآن</button>
+                <div class="p-8 text-center my-auto">
+                    <div class="text-8xl mb-8">🛡️</div>
+                    <h1 class="text-3xl font-black text-slate-800 mb-4">تحدي الوعي الرقمي</h1>
+                    <p class="text-slate-500 mb-10 text-lg">اختبر قدرتك على مواجهة التهديدات السيبرانية (10 مواقف)</p>
+                    <button onclick="showQuestion()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl shadow-xl hover:bg-blue-700 active:scale-95 transition-all">ابدأ الاختبار الآن</button>
                 </div>
             `;
         }
@@ -100,24 +138,21 @@
                 return;
             }
             const item = questions[currentIdx];
-            // خلط الإجابات عشوائياً في كل مرة
             const shuffledOptions = [...item.options].sort(() => Math.random() - 0.5);
 
             container.innerHTML = `
-                <div class="flex justify-between items-center mb-6">
-                    <span class="text-sm font-bold text-blue-600">موقف ${currentIdx + 1}/10</span>
-                    <div class="w-24 bg-slate-100 h-2 rounded-full overflow-hidden">
-                        <div class="bg-blue-600 h-full" style="width: ${(currentIdx+1)*10}%"></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: ${(currentIdx+1)*10}%"></div></div>
+                <div class="p-8 pt-12 flex-grow flex flex-col">
+                    <div class="icon-circle">${item.icon}</div>
+                    <div class="text-center mb-8">
+                        <span class="bg-blue-100 text-blue-600 px-4 py-1 rounded-full text-sm font-bold">الموقف ${currentIdx + 1} من 10</span>
+                        <p class="text-xl font-bold text-slate-800 mt-6 leading-relaxed">${item.q}</p>
                     </div>
-                </div>
-                <div class="text-center mb-6">
-                    <div class="text-6xl mb-3">${item.icon}</div>
-                    <p class="text-lg font-bold text-slate-800 leading-relaxed px-2">${item.q}</p>
-                </div>
-                <div class="mt-auto">
-                    ${shuffledOptions.map(opt => `
-                        <button onclick="handleAnswer(${opt.c}, '${opt.m}')" class="btn-option">${opt.t}</button>
-                    `).join('')}
+                    <div class="mt-auto">
+                        ${shuffledOptions.map(opt => `
+                            <button onclick="handleAnswer(${opt.c}, '${opt.m}')" class="btn-option">${opt.t}</button>
+                        `).join('')}
+                    </div>
                 </div>
             `;
         }
@@ -125,15 +160,15 @@
         function handleAnswer(isCorrect, message) {
             if (isCorrect) score++;
             container.innerHTML = `
-                <div class="text-center my-auto">
-                    <div class="text-7xl mb-6">${isCorrect ? '✅' : '❌'}</div>
-                    <h2 class="text-2xl font-bold mb-4 ${isCorrect ? 'text-green-600' : 'text-red-500'}">
-                        ${isCorrect ? 'إجابة ذكية!' : 'تصرف خطر!'}
+                <div class="p-8 text-center my-auto flex flex-col items-center">
+                    <div class="text-8xl mb-6">${isCorrect ? '🌟' : '⚠️'}</div>
+                    <h2 class="text-3xl font-black mb-4 ${isCorrect ? 'text-green-500' : 'text-red-500'}">
+                        ${isCorrect ? 'تصرف ذكي!' : 'انتبه! خطر'}
                     </h2>
-                    <div class="bg-slate-50 p-5 rounded-2xl mb-8 border-2 border-slate-100">
-                        <p class="text-slate-600 font-bold">${message}</p>
+                    <div class="bg-slate-50 p-6 rounded-3xl mb-10 border-2 border-slate-100 shadow-inner">
+                        <p class="text-slate-600 text-lg font-medium leading-relaxed">${message}</p>
                     </div>
-                    <button onclick="nextQuestion()" class="w-full bg-slate-800 text-white font-bold py-4 rounded-xl shadow-lg">الموقف التالي</button>
+                    <button onclick="nextQuestion()" class="w-full bg-slate-900 text-white font-bold py-5 rounded-2xl shadow-lg active:scale-95 transition-all">الموقف التالي</button>
                 </div>
             `;
         }
@@ -144,13 +179,13 @@
         }
 
         function showResult() {
-            let rank = score >= 8 ? "بطل سيبراني أسطوري! 🏆" : (score >= 5 ? "مستوى حماية جيد 🛡️" : "تحتاج لمراجعة معلوماتك 🐣");
+            let rank = score >= 8 ? "خبير أمن سيبراني 🏆" : (score >= 5 ? "مستوى حماية جيد 🛡️" : "تحتاج لرفع وعيك الرقمي 🐣");
             container.innerHTML = `
-                <div class="text-center my-auto">
-                    <h2 class="text-slate-400 font-bold uppercase tracking-widest mb-2">النتيجة النهائية</h2>
-                    <div class="text-8xl font-black text-blue-600 mb-6">${score}/10</div>
-                    <p class="text-xl font-bold text-slate-800 mb-10">${rank}</p>
-                    <button onclick="location.reload()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-xl hover:bg-blue-700">إعادة التحدي</button>
+                <div class="p-8 text-center my-auto flex flex-col items-center">
+                    <h2 class="text-slate-400 font-bold tracking-widest mb-4">النتيجة النهائية</h2>
+                    <div class="text-9xl font-black text-blue-600 mb-6 drop-shadow-lg">${score}/10</div>
+                    <p class="text-2xl font-black text-slate-800 mb-12">${rank}</p>
+                    <button onclick="location.reload()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl shadow-xl hover:bg-blue-700 active:scale-95 transition-all">إعادة المحاولة</button>
                 </div>
             `;
         }
