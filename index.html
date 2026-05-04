@@ -5,192 +5,166 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>تحدي الوعي الرقمي</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #2563eb;
-            --bg: #f1f5f9;
-        }
         body { 
             font-family: 'Tajawal', sans-serif; 
-            background-color: #0f172a;
+            background: #0f172a;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            /* منع التحديد الأزرق في الهواتف */
-            -webkit-tap-highlight-color: transparent;
+            -webkit-tap-highlight-color: transparent; /* منع اللون الأزرق في الجوال */
         }
-        .quiz-card {
+        .app-card {
             background: #ffffff;
-            width: 100%;
-            max-width: 420px;
-            margin: 15px;
-            border-radius: 30px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 400px;
+            border-radius: 2rem;
+            min-height: 580px;
             display: flex;
             flex-direction: column;
-            min-height: 600px;
+            padding: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             position: relative;
         }
-        .icon-circle {
-            width: 90px;
-            height: 90px;
+        .btn-opt {
+            width: 100%;
+            padding: 1.2rem;
+            border: 2px solid #f1f5f9;
+            border-radius: 1.2rem;
             background: #f8fafc;
-            border-radius: 50%;
+            font-weight: 700;
+            color: #334155;
+            text-align: right;
+            transition: 0.2s;
+            cursor: pointer;
+            outline: none !important;
+            display: block;
+            position: relative;
+            z-index: 50; /* ضمان ظهور الزر فوق أي طبقة */
+        }
+        .btn-opt:active {
+            transform: scale(0.96);
+            background: #e2e8f0;
+        }
+        .icon-box {
+            width: 80px;
+            height: 80px;
+            background: #eff6ff;
+            border-radius: 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 45px;
-            margin: -45px auto 20px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            border: 5px solid #ffffff;
-        }
-        .btn-option {
-            width: 100%;
-            padding: 16px 20px;
-            margin-bottom: 12px;
-            border: 2px solid #f1f5f9;
-            border-radius: 18px;
-            background: #f8fafc;
-            font-weight: 600;
-            text-align: right;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: #334155;
-            outline: none !important;
-        }
-        .btn-option:hover {
-            border-color: var(--primary);
-            background-color: #eff6ff;
-            transform: translateY(-2px);
-        }
-        /* منع أي تحديد أو برواز عند النقر في الهاتف */
-        .btn-option:focus, .btn-option:active {
-            outline: none;
-            box-shadow: none;
-            background-color: #e2e8f0;
-        }
-        .progress-bar {
-            height: 6px;
-            background: #e2e8f0;
-            width: 100%;
-            position: absolute;
-            top: 0;
-        }
-        .progress-fill {
-            height: 100%;
-            background: var(--primary);
-            transition: width 0.4s ease;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem;
         }
     </style>
 </head>
 <body>
 
-    <div id="game-container" class="quiz-card">
-        <!-- المحتوى يتغير بالجاوا سكريبت -->
+    <div id="quiz-app" class="app-card">
+        <!-- المحتوى يتغير برمجياً -->
     </div>
 
     <script>
-        const questions = [
-            { icon: "📧", q: "وصلك إيميل يطلب منك تحديث كلمة سرك فوراً عبر رابط خارجي لأن حسابك سيتوقف. ماذا تفعل؟", 
-              options: [{t: "أضغط على الرابط بسرعة", c: false, m: "خطأ! هذا أسلوب 'الاستعجال' للتصيد."}, {t: "أحذف الرسالة وأبلغ قسم التقنية", c: true, m: "ممتاز! وعيك يحمي المؤسسة."}] },
-            { icon: "🔐", q: "أي من هذه الخيارات تعتبر الأقوى لحماية حساباتك الشخصية؟", 
-              options: [{t: "Admin@123", c: false, m: "ضعيفة جداً وسهلة التخمين."}, {t: "Blue#Tree@Sky2024", c: true, m: "رائع! الطول والرموز هما السر."}] },
-            { icon: "☕", q: "ستذهب لإحضار قهوة وستعود بعد دقيقتين. كيف تترك جهازك؟", 
-              options: [{t: "أتركه مفتوحاً للمدة القصيرة", c: false, m: "خطر! دقيقة واحدة تكفي للوصول لبياناتك."}, {t: "أقفل الشاشة (Win + L)", c: true, m: "أحسنت! إجراء وقائي بسيط ومحترف."}] },
-            { icon: "💾", q: "وجدت فلاش ميموري (USB) في المصعد مكتوب عليه 'الرواتب'. ماذا تفعل؟", 
-              options: [{t: "أوصله بجهازي لأعرف صاحبه", c: false, m: "خطر! الفلاشات المجهولة تحتوي برمجيات خبيثة."}, {t: "أسلمه للأمن دون فتحه", c: true, m: "ذكي! لا تثق أبداً بالأجهزة المجهولة."}] },
-            { icon: "🛡️", q: "وصلتك رسالة نصية تطلب ضغط رابط لتتجنب إيقاف بطاقتك البنكية. ماذا تفعل؟", 
-              options: [{t: "أضغط للتأكد من حسابي", c: false, m: "خطأ! البنوك لا تطلب ذلك عبر الرسائل النصية."}, {t: "أتجاهل الرسالة وأبلغ عنها", c: true, m: "بطل! التجاهل هو أفضل رد على المحتالين."}] },
-            { icon: "🌐", q: "أنت في مطار وتحتاج للدخول على بريدك الرسمي. ماذا تستخدم؟", 
-              options: [{t: "واي فاي المطار المجاني", c: false, m: "خطر! الشبكات العامة غير آمنة للعمل."}, {t: "نقطة اتصال شخصية (Hotspot)", c: true, m: "رائع! اتصالك الخاص هو الأكثر أماناً."}] },
-            { icon: "🆙", q: "ظهر لك إشعار يطلب تحديث البرامج فوراً. ماذا تفعل؟", 
-              options: [{t: "تأجيل التحديث لنهاية الشهر", c: false, m: "خطأ! التحديثات تعالج ثغرات أمنية خطيرة."}, {t: "تثبيت التحديث فوراً", c: true, m: "ممتاز! التحديث المستمر هو درعك الأول."}] },
-            { icon: "📞", q: "اتصل بك شخص يدعي أنه من البنك ويطلب كود التحقق الذي وصلك. ماذا تفعل؟", 
-              options: [{t: "أعطيه الكود ليحدث بياناتي", c: false, m: "خطر! كود التحقق سر لا يشارك أبداً."}, {t: "أغلق الخط فوراً", c: true, m: "أحسنت! البنوك لا تطلب الكود هاتفياً."}] },
-            { icon: "📸", q: "تريد تصوير لقطة للمكتب، وخلفك شاشة تظهر فيها بيانات العملاء. ماذا تفعل؟", 
-              options: [{t: "ألتقط الصورة، لا أحد سيهتم", c: false, m: "خطأ! قد تسرب معلومات حساسة دون قصد."}, {t: "أغلق الشاشة قبل التصوير", c: true, m: "واعي جداً! الخصوصية تبدأ بتصرفاتك."}] },
-            { icon: "📱", q: "وجدت تطبيقاً يوفر ميزات خرافية لكنه يطلب صلاحية الوصول لكل ملفاتك. ماذا تفعل؟", 
-              options: [{t: "أوافق للحصول على الميزات", c: false, m: "خطر! هذه الصلاحيات قد تستخدم للتجسس."}, {t: "أرفض وأحذف التطبيق", c: true, m: "رائع! حماية بياناتك أهم من أي تطبيق."}] }
+        const rawData = [
+            { i: "📧", q: "وصلك إيميل يطلب منك تحديث كلمة سرك فوراً عبر رابط خارجي. ماذا تفعل؟", 
+              o: [{t: "أضغط على الرابط بسرعة", c: false, m: "خطأ! الاستعجال هو فخ التصيد الأول."}, {t: "أحذف الرسالة وأبلغ التقنية", c: true, m: "رائع! الحذر هو أقوى سلاح."}] },
+            { i: "🔐", q: "أي كلمة مرور هي الأفضل لحماية حسابك؟", 
+              o: [{t: "Password123", c: false, m: "سهلة الاختراق جداً!"}, {t: "M@rch#2026!Sky", c: true, m: "ممتاز! الطول والرموز هما السر."}] },
+            { i: "💻", q: "ستترك مكتبك لمدة 5 دقائق. كيف تحمي جهازك؟", 
+              o: [{t: "أتركه مفتوحاً", c: false, m: "غير آمن! البيانات قد تسرق في ثوانٍ."}, {t: "أقفل الشاشة فوراً", c: true, m: "بطل! قفل الشاشة يحمي خصوصيتك."}] },
+            { i: "💾", q: "وجدت فلاش ميموري مجهول في ممر العمل. ماذا تفعل؟", 
+              o: [{t: "أجربه لأعرف ما بداخله", c: false, m: "خطر! قد يحتوي على فيروسات تجسس."}, {t: "أسلمه للأمن فوراً", c: true, m: "ذكي! الأجهزة المجهولة فخاخ رقمية."}] },
+            { i: "📱", q: "رسالة من البنك تطلب منك الضغط على رابط لتحديث بياناتك. هل تضغط؟", 
+              o: [{t: "نعم، لتجنب إيقاف الحساب", c: false, m: "خطأ! البنوك لا تطلب البيانات عبر روابط نصية."}, {t: "لا، أتصل بالبنك مباشرة", c: true, m: "أحسنت! التواصل الرسمي هو الأضمن."}] },
+            { i: "📡", q: "هل تستخدم واي فاي المقهى للدخول على حسابات العمل؟", 
+              o: [{t: "نعم، لأنه أسرع", c: false, m: "خطر! الشبكات العامة مرتع للمخترقين."}, {t: "لا، أستخدم باقة الجوال", c: true, m: "رائع! اتصالك الخاص أكثر أماناً."}] },
+            { i: "⚙️", q: "هناك تحديث أمني متاح لنظامك. متى تثبته؟", 
+              o: [{t: "عندما أفضى لاحقاً", c: false, m: "خطر! التأجيل يعرضك للثغرات."}, {t: "الآن فوراً", c: true, m: "بطل! التحديثات هي درعك المتجدد."}] },
+            { i: "📞", q: "اتصال يدعي صاحبه أنه من الدعم الفني ويطلب رقمك السري. هل تعطيه؟", 
+              o: [{t: "نعم، ليحل المشكلة", c: false, m: "خطر! لا أحد يطلب رقمك السري هاتفياً."}, {t: "أرفض وأغلق الخط", c: true, m: "ممتاز! أنت محصن ضد الهندسة الاجتماعية."}] },
+            { i: "📷", q: "تصور صورة في المكتب وتظهر فيها أوراق سرية. هل تنشرها؟", 
+              o: [{t: "نعم، الصورة جميلة", c: false, m: "خطأ! تسريب البيانات بالصور كارثة أمنية."}, {t: "أمسحها أو أخفي البيانات", c: true, m: "واعي! التفاصيل الصغيرة تصنع الأمان."}] },
+            { i: "📥", q: "تطبيق يطلب صلاحية الوصول لموقعك وصورك دون سبب. هل توافق؟", 
+              o: [{t: "نعم، أريد استخدامه", c: false, m: "خطر! الصلاحيات الزائدة تفتح باب التجسس."}, {t: "أرفض وأحذف التطبيق", c: true, m: "رائع! بياناتك الشخصية لا تقدر بثمن."}] }
         ];
 
-        let currentIdx = 0;
+        let questions = [];
+        let cur = 0;
         let score = 0;
-        const container = document.getElementById('game-container');
+        const app = document.getElementById('quiz-app');
 
-        function initGame() {
-            container.innerHTML = `
-                <div class="p-8 text-center my-auto">
-                    <div class="text-8xl mb-8">🛡️</div>
-                    <h1 class="text-3xl font-black text-slate-800 mb-4">تحدي الوعي الرقمي</h1>
-                    <p class="text-slate-500 mb-10 text-lg">اختبر قدرتك على مواجهة التهديدات السيبرانية (10 مواقف)</p>
-                    <button onclick="showQuestion()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl shadow-xl hover:bg-blue-700 active:scale-95 transition-all">ابدأ الاختبار الآن</button>
+        // وظيفة لخلط أي مصفوفة (عشوائية)
+        function shuffle(arr) { return arr.sort(() => Math.random() - 0.5); }
+
+        function start() {
+            // خلط الأسئلة عند البداية
+            questions = shuffle([...rawData]);
+            app.innerHTML = `
+                <div class="my-auto text-center">
+                    <div class="text-8xl mb-6">🛡️</div>
+                    <h1 class="text-3xl font-black text-slate-800 mb-4">تحدي الأمان</h1>
+                    <p class="text-slate-500 mb-10">هل أنت مستعد لاختبار وعيك السيبراني؟</p>
+                    <button onclick="renderQ()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl shadow-lg active:scale-95 transition-all">ابدأ التحدي (10 أسئلة)</button>
                 </div>
             `;
         }
 
-        function showQuestion() {
-            if (currentIdx >= questions.length) {
-                showResult();
-                return;
-            }
-            const item = questions[currentIdx];
-            const shuffledOptions = [...item.options].sort(() => Math.random() - 0.5);
+        function renderQ() {
+            if(cur >= questions.length) { finish(); return; }
+            const qObj = questions[cur];
+            // خلط الخيارات لكل سؤال بشكل منفصل
+            const opts = shuffle([...qObj.o]);
 
-            container.innerHTML = `
-                <div class="progress-bar"><div class="progress-fill" style="width: ${(currentIdx+1)*10}%"></div></div>
-                <div class="p-8 pt-12 flex-grow flex flex-col">
-                    <div class="icon-circle">${item.icon}</div>
-                    <div class="text-center mb-8">
-                        <span class="bg-blue-100 text-blue-600 px-4 py-1 rounded-full text-sm font-bold">الموقف ${currentIdx + 1} من 10</span>
-                        <p class="text-xl font-bold text-slate-800 mt-6 leading-relaxed">${item.q}</p>
+            app.innerHTML = `
+                <div class="w-full bg-slate-100 h-2 rounded-full mb-8 overflow-hidden">
+                    <div class="bg-blue-600 h-full transition-all duration-500" style="width:${(cur+1)*10}%"></div>
+                </div>
+                <div class="icon-box">${qObj.i}</div>
+                <div class="text-center mb-8 flex-grow">
+                    <p class="text-sm font-bold text-blue-600 mb-2 uppercase tracking-widest">الموقف ${cur+1}</p>
+                    <h2 class="text-xl font-bold text-slate-800 leading-relaxed">${qObj.q}</h2>
+                </div>
+                <div class="grid gap-4">
+                    ${opts.map(opt => `
+                        <button onclick="check(${opt.c}, '${opt.m}')" class="btn-opt">${opt.t}</button>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function check(isC, msg) {
+            if(isC) score++;
+            app.innerHTML = `
+                <div class="my-auto text-center animate-in fade-in duration-500">
+                    <div class="text-8xl mb-6">${isC ? '✅' : '❌'}</div>
+                    <h2 class="text-3xl font-black mb-4 ${isC ? 'text-green-600' : 'text-red-500'}">${isC ? 'رائع!' : 'انتبه!'}</h2>
+                    <div class="bg-slate-50 p-6 rounded-2xl mb-10 border-2 border-slate-100">
+                        <p class="text-slate-600 font-bold leading-relaxed">${msg}</p>
                     </div>
-                    <div class="mt-auto">
-                        ${shuffledOptions.map(opt => `
-                            <button onclick="handleAnswer(${opt.c}, '${opt.m}')" class="btn-option">${opt.t}</button>
-                        `).join('')}
-                    </div>
+                    <button onclick="next()" class="w-full bg-slate-900 text-white font-bold py-5 rounded-2xl shadow-lg active:scale-95 transition-all">الموقف التالي</button>
                 </div>
             `;
         }
 
-        function handleAnswer(isCorrect, message) {
-            if (isCorrect) score++;
-            container.innerHTML = `
-                <div class="p-8 text-center my-auto flex flex-col items-center">
-                    <div class="text-8xl mb-6">${isCorrect ? '🌟' : '⚠️'}</div>
-                    <h2 class="text-3xl font-black mb-4 ${isCorrect ? 'text-green-500' : 'text-red-500'}">
-                        ${isCorrect ? 'تصرف ذكي!' : 'انتبه! خطر'}
-                    </h2>
-                    <div class="bg-slate-50 p-6 rounded-3xl mb-10 border-2 border-slate-100 shadow-inner">
-                        <p class="text-slate-600 text-lg font-medium leading-relaxed">${message}</p>
-                    </div>
-                    <button onclick="nextQuestion()" class="w-full bg-slate-900 text-white font-bold py-5 rounded-2xl shadow-lg active:scale-95 transition-all">الموقف التالي</button>
+        function next() { cur++; renderQ(); }
+
+        function finish() {
+            let rank = score >= 8 ? "بطل سيبراني" : (score >= 5 ? "واعي تقنياً" : "تحتاج تدريب");
+            app.innerHTML = `
+                <div class="my-auto text-center">
+                    <p class="text-slate-400 font-bold mb-2">نتيجتك النهائية</p>
+                    <div class="text-8xl font-black text-blue-600 mb-6">${score}/10</div>
+                    <h2 class="text-2xl font-bold text-slate-800 mb-10">${rank}</h2>
+                    <button onclick="location.reload()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl shadow-lg">إعادة المحاولة</button>
                 </div>
             `;
         }
 
-        function nextQuestion() {
-            currentIdx++;
-            showQuestion();
-        }
-
-        function showResult() {
-            let rank = score >= 8 ? "خبير أمن سيبراني 🏆" : (score >= 5 ? "مستوى حماية جيد 🛡️" : "تحتاج لرفع وعيك الرقمي 🐣");
-            container.innerHTML = `
-                <div class="p-8 text-center my-auto flex flex-col items-center">
-                    <h2 class="text-slate-400 font-bold tracking-widest mb-4">النتيجة النهائية</h2>
-                    <div class="text-9xl font-black text-blue-600 mb-6 drop-shadow-lg">${score}/10</div>
-                    <p class="text-2xl font-black text-slate-800 mb-12">${rank}</p>
-                    <button onclick="location.reload()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl shadow-xl hover:bg-blue-700 active:scale-95 transition-all">إعادة المحاولة</button>
-                </div>
-            `;
-        }
-
-        initGame();
+        start();
     </script>
 </body>
 </html>
